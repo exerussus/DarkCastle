@@ -37,10 +37,6 @@ class Personality:
         return self._current_dexterity
 
     @property
-    def current_charisma(self):
-        return self._current_charisma
-
-    @property
     def is_alive(self):
         return self._is_alive
 

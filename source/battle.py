@@ -43,13 +43,24 @@ class Battle:
                 enemy.take_damage(self._player.attack_damage)
                 enemy.demoralize(self._demoralize_value_damage)
                 self._is_first_attack = False
+                if enemy.is_alive:
+                    Battle._output(f"{enemy.name} получает урон! Его здоровье опустилось до: {enemy.current_strength}.")
+                else:
+                    Battle._output(f"{enemy.name} получает урон и погибает!")
             else:
                 enemy.demoralize(self._demoralize_value_parry)
+                Battle._output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
         elif player_roll < enemy_roll:
             self._player.take_damage(enemy.attack_damage)
             enemy.inspire(self._inspire_value_attack)
+            if self._player.is_alive:
+                Battle._output(f"{self._player.name} получает урон! "
+                               f"Его здоровье опустилось до: {self._player.current_strength}.")
+            else:
+                Battle._output(f"{self._player.name} получает урон и погибает!")
         else:
             enemy.demoralize(self._demoralize_value_parry)
+            Battle._output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
 
     def round(self):
         self.reset_before_round()

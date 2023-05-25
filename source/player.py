@@ -14,6 +14,10 @@ class Player:
         return self._personality.name
 
     @property
+    def current_strength(self) -> bool:
+        return self._personality.current_strength
+
+    @property
     def is_alive(self) -> bool:
         return self._personality.is_alive
 

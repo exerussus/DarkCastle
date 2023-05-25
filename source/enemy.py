@@ -23,11 +23,15 @@ class Enemy:
 
     @property
     def attack_damage(self) -> int:
-        return self._personality.attack_damage + 1 if self._can_be_afraid and self._morality >= 18 else 0
+        return self._personality.attack_damage + (1 if self._can_be_afraid and self._morality >= 18 else 0)
 
     @property
     def dexterity(self) -> int:
         return self._personality.dexterity
+
+    @property
+    def current_strength(self) -> bool:
+        return self._personality.current_strength
 
     def take_damage(self, hp_value: int) -> None:
         self._personality.take_damage(hp_value)
