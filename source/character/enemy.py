@@ -10,28 +10,16 @@ class Enemy:
         self._is_afraid = True
 
     @property
-    def name(self) -> bool:
-        return self._character.name
-
-    @property
-    def is_alive(self) -> bool:
-        return self._character.is_alive
+    def character(self):
+        return self._character
 
     @property
     def is_afraid(self) -> bool:
         return self._is_afraid
 
     @property
-    def attack_damage(self) -> int:
+    def attack_fixed_damage(self) -> int:
         return self._character.attack_damage + (1 if self._can_be_afraid and self._morality >= 18 else 0)
-
-    @property
-    def dexterity(self) -> int:
-        return self._character.dexterity
-
-    @property
-    def current_strength(self) -> bool:
-        return self._character.current_strength
 
     def take_damage(self, hp_value: int) -> None:
         self._character.take_damage(hp_value)
