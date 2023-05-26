@@ -31,20 +31,20 @@ class Battle:
         self._inspire_value_attack = 1
 
     def start(self) -> bool:
-        return self.round()
+        return self._round()
 
-    def roll(self, character) -> int:
+    def _roll(self, character) -> int:
         roll = Dice.roll_d12(character.dexterity)
         self._output(f"{character.name} выбрасывает: {roll}.")
         return roll
 
-    def reset_before_round(self):
+    def _reset_before_round(self):
         self._is_first_attack = True
 
-    def get_is_enemies_defeated(self):
+    def _get_is_enemies_defeated(self):
         return True if len(self._enemies) == 0 else False
 
-    def clear_corps(self):
+    def _clear_corps(self):
         count = len(self._enemies)
         while count > 0:
             count -= 1
@@ -71,7 +71,7 @@ class Battle:
         except:
             pass
 
-    def deal_damage(self, enemy: Enemy, player_roll: int, enemy_roll: int):
+    def _deal_damage(self, enemy: Enemy, player_roll: int, enemy_roll: int):
         if player_roll > enemy_roll:
             if self._is_first_attack:
                 enemy.take_damage(self._player.attack_damage)
@@ -96,19 +96,19 @@ class Battle:
             enemy.demoralize(self._demoralize_value_parry)
             self._output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
 
-    def round(self):
-        self.reset_before_round()
+    def _round(self):
+        self._reset_before_round()
         self._attack_choose()
-        player_roll = self.roll(self._player)
+        player_roll = self._roll(self._player)
         for enemy in self._enemies:
             if enemy.is_alive:
-                enemy_roll = self.roll(enemy)
-                self.deal_damage(enemy=enemy, player_roll=player_roll, enemy_roll=enemy_roll)
-        self.clear_corps()
+                enemy_roll = self._roll(enemy)
+                self._deal_damage(enemy=enemy, player_roll=player_roll, enemy_roll=enemy_roll)
+        self._clear_corps()
         if not self._player.is_alive:
             return False
-        elif self.get_is_enemies_defeated():
+        elif self._get_is_enemies_defeated():
             return True
         else:
-            return self.round()
+            return self._round()
 
