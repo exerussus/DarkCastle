@@ -9,9 +9,9 @@ from tools.const import Const
 
 class PlayerCreator:
 
-    _DEXTERITY = Const().DEXTERITY
-    _STRENGTH = Const().STRENGTH
-    _CHARISMA = Const().CHARISMA
+    _DEXTERITY = Const().Parameter.DEXTERITY
+    _STRENGTH = Const().Parameter.STRENGTH
+    _CHARISMA = Const().Parameter.CHARISMA
 
     _raw_params = {
         2: {_DEXTERITY: 8, _STRENGTH: 22, _CHARISMA: 8},

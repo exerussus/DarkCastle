@@ -4,11 +4,11 @@ class Const:
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
-            cls.instance = ConstParams()
+            cls.instance = Constant()
         return cls.instance
 
 
-class ConstParams:
+class ConstParam:
     DEXTERITY = "dexterity"
     STRENGTH = "strength"
     CHARISMA = "charisma"
@@ -17,3 +17,14 @@ class ConstParams:
     STRENGTH_NAME = "сила"
     CHARISMA_NAME = "харизма"
 
+
+class ConstSpell:
+    copy = "**"
+    fireball = "@@"
+    swimming = "%%"
+    levitation = "^^"
+
+
+class Constant:
+    Parameter = ConstParam
+    Spell = ConstSpell
