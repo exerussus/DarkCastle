@@ -1,7 +1,7 @@
 from tools.api import Api
-from source.player import Player
-from source.dice import Dice
-from source.enemy import Enemy
+from source.character.player import Player
+from tools.dice import Dice
+from source.character.enemy import Enemy
 
 
 class Battle:

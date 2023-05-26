@@ -1,8 +1,8 @@
 
-from source.player import Player
-from source.dice import Dice
-from source.personality import Personality
-from source.inventory import Inventory
+from source.character.player import Player
+from tools.dice import Dice
+from source.character.character import Character
+from source.inventory.inventory import Inventory
 from tools.api import Api
 from tools.const import Const
 
@@ -56,6 +56,6 @@ class PlayerCreator:
         strength = get_parameter(PlayerCreator._STRENGTH, Const().STRENGTH_NAME)
         charisma = get_parameter(PlayerCreator._CHARISMA, Const().CHARISMA_NAME)
 
-        return Player(Personality(name, dexterity, strength, charisma, 2), Inventory())
+        return Player(Character(name, dexterity, strength, charisma, 2), Inventory())
 
 

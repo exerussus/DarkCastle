@@ -1,6 +1,6 @@
 
 
-class Personality:
+class Character:
 
     def __init__(self, name: str, dexterity: int, strength: int, charisma: int, attack_damage: int):
         self._name = name

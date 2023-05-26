@@ -1,16 +1,11 @@
-from source.item import Item
+from source.inventory.item import Item
 
 
-class Inventory:
+class Bag:
 
     def __init__(self):
         self._bag_dict = {}
         self.create_slots()
-        self._gold = 15
-
-    @property
-    def gold(self) -> int:
-        return self._gold
 
     def create_slots(self):
         for i in range(7):
@@ -43,16 +38,4 @@ class Inventory:
     def get_item(self, slot_index: int):
         if self._bag_dict[slot_index] is not None and self._is_correct_index_slot:
             return self._bag_dict[slot_index]
-
-    def add_gold(self, value: int) -> None:
-        if value > 0:
-            self._gold += value
-
-    def get_is_gold_enough(self, cost_value: int) -> bool:
-        return True if self._gold >= cost_value else False
-
-    def spend_gold(self, value: int) -> None:
-        self._gold -= value
-        if self._gold < 0:
-            self._gold = 0
 
