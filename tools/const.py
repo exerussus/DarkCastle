@@ -18,13 +18,26 @@ class ConstParam:
     CHARISMA_NAME = "харизма"
 
 
-class ConstSpell:
-    copy = "**"
-    fireball = "@@"
-    swimming = "%%"
-    levitation = "^^"
+class ConstKeyword:
+    SEPARATOR = "|"
+    COPY = "**"
+    FIREBALL = "@@"
+    SWIMMING = "%%"
+    LEVITATION = "^^"
+    FIGHT = "##"
+    CHECK = "$$"
+    NEXT = "0"
+
+
+class ConstTableName:
+    TEXT = 'text'
+    TRANSITION = 'transition'
+    ITEM = 'item'
+    ENEMY = 'enemy'
+    CHECK = 'check'
 
 
 class Constant:
     Parameter = ConstParam
-    Spell = ConstSpell
+    Keyword = ConstKeyword
+    TableName = ConstTableName
