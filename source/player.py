@@ -10,8 +10,20 @@ class Player:
         self._inventory = inventory
 
     @property
+    def gold(self) -> int:
+        return self._inventory.gold
+
+    @property
     def name(self) -> bool:
         return self._personality.name
+
+    @property
+    def charisma(self) -> bool:
+        return self._personality.charisma
+
+    @property
+    def strength(self) -> bool:
+        return self._personality.strength
 
     @property
     def current_strength(self) -> bool:
@@ -40,3 +52,9 @@ class Player:
         self._inventory.delete_item(slot_index)
         return transition_value
 
+    def get_spend_if_enough(self, cost_value: int) -> bool:
+        if self._inventory.get_is_gold_enough(cost_value):
+            self._inventory.spend_gold(cost_value)
+            return True
+        else:
+            return False

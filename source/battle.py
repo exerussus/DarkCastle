@@ -1,26 +1,10 @@
-from data.api import Api
+from tools.api import Api
 from source.player import Player
 from source.dice import Dice
 from source.enemy import Enemy
 
 
 class Battle:
-
-    @property
-    def _next_button(self):
-        return Api().NEXT_BUTTON_FUNCTION
-
-    @property
-    def _roll_dice(self):
-        return Api().ROLL_DICE_FUNCTION
-
-    @property
-    def _input(self):
-        return Api().INPUT_FUNCTION
-
-    @property
-    def _output(self):
-        return Api().OUTPUT_FUNCTION
 
     def __init__(self, player: Player, *enemies: Enemy):
         self._player = player
@@ -35,7 +19,7 @@ class Battle:
 
     def _roll(self, character) -> int:
         roll = Dice.roll_d12(character.dexterity)
-        self._output(f"{character.name} выбрасывает: {roll}.")
+        Api().output(f"{character.name} выбрасывает: {roll}.")
         return roll
 
     def _reset_before_round(self):
@@ -52,16 +36,16 @@ class Battle:
                 self._enemies.pop(count)
 
     def _attack_choose(self):
-        self._output(f"Кого следует атаковать?")
+        Api().output(f"Кого следует атаковать?")
         enemies_count = 0
         for enemy in self._enemies:
             enemies_count += 1
-            self._output(f"{enemies_count}. {enemy.name} "
+            Api().output(f"{enemies_count}. {enemy.name} "
                          f"| Ловкость: {enemy.dexterity} "
                          f"| Здоровье: {enemy.current_strength}")
-        self._output(f"\n")
+        Api().output(f"\n")
         try:
-            choice = int(self._input())
+            choice = int(Api().input())
             if len(self._enemies) >= choice:
                 target_index = choice - 1
                 target = self._enemies[target_index]
@@ -78,23 +62,23 @@ class Battle:
                 enemy.demoralize(self._demoralize_value_damage)
                 self._is_first_attack = False
                 if enemy.is_alive:
-                    self._output(f"{enemy.name} получает урон! Его здоровье опустилось до: {enemy.current_strength}.")
+                    Api().output(f"{enemy.name} получает урон! Его здоровье опустилось до: {enemy.current_strength}.")
                 else:
-                    self._output(f"{enemy.name} получает урон и погибает!")
+                    Api().output(f"{enemy.name} получает урон и погибает!")
             else:
                 enemy.demoralize(self._demoralize_value_parry)
-                self._output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
+                Api().output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
         elif player_roll < enemy_roll:
             self._player.take_damage(enemy.attack_damage)
             enemy.inspire(self._inspire_value_attack)
             if self._player.is_alive:
-                self._output(f"{self._player.name} получает урон! "
+                Api().output(f"{self._player.name} получает урон! "
                                f"Его здоровье опустилось до: {self._player.current_strength}.")
             else:
-                self._output(f"{self._player.name} получает урон и погибает!")
+                Api().output(f"{self._player.name} получает урон и погибает!")
         else:
             enemy.demoralize(self._demoralize_value_parry)
-            self._output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
+            Api().output(f"{self._player.name} парирует атаку, которую наносит {enemy.name}.")
 
     def _round(self):
         self._reset_before_round()
