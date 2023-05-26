@@ -24,7 +24,7 @@ class Battle:
 
     def __init__(self, player: Player, *enemies: Enemy):
         self._player = player
-        self._enemies = enemies
+        self._enemies = list(enemies)
         self._is_first_attack = True
         self._demoralize_value_damage = 2
         self._demoralize_value_parry = 1
@@ -42,11 +42,34 @@ class Battle:
         self._is_first_attack = True
 
     def get_is_enemies_defeated(self):
-        is_defeated = True
+        return True if len(self._enemies) == 0 else False
+
+    def clear_corps(self):
+        count = len(self._enemies)
+        while count > 0:
+            count -= 1
+            if self._enemies[count].current_strength <= 0:
+                self._enemies.pop(count)
+
+    def _attack_choose(self):
+        self._output(f"Кого следует атаковать?")
+        enemies_count = 0
         for enemy in self._enemies:
-            if enemy.is_alive:
-                is_defeated = False
-        return is_defeated
+            enemies_count += 1
+            self._output(f"{enemies_count}. {enemy.name} "
+                         f"| Ловкость: {enemy.dexterity} "
+                         f"| Здоровье: {enemy.current_strength}")
+        self._output(f"\n")
+        try:
+            choice = int(self._input())
+            if len(self._enemies) >= choice:
+                target_index = choice - 1
+                target = self._enemies[target_index]
+                first_enemy = self._enemies[0]
+                self._enemies[0] = target
+                self._enemies[target_index] = first_enemy
+        except:
+            pass
 
     def deal_damage(self, enemy: Enemy, player_roll: int, enemy_roll: int):
         if player_roll > enemy_roll:
@@ -75,12 +98,13 @@ class Battle:
 
     def round(self):
         self.reset_before_round()
-        self._roll_dice()
+        self._attack_choose()
         player_roll = self.roll(self._player)
         for enemy in self._enemies:
             if enemy.is_alive:
                 enemy_roll = self.roll(enemy)
                 self.deal_damage(enemy=enemy, player_roll=player_roll, enemy_roll=enemy_roll)
+        self.clear_corps()
         if not self._player.is_alive:
             return False
         elif self.get_is_enemies_defeated():
