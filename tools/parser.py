@@ -44,7 +44,7 @@ class Parser:
                 Const().TableName.TEXT: split_transition[0],
                 Const().TableName.TRANSITION: split_transition[1]
                                               }
-            
+
         return transition_dict
 
     @staticmethod
