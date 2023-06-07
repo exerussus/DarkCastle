@@ -16,6 +16,7 @@ class Parser:
 
         text: list = Parser._parse_text(text_raw)
         transition: dict = Parser._parse_transition(transition_raw)
+        item: list = Parser._parse_item(item_raw)
 
         location_dict[Const().TableName.TEXT] = text
         location_dict[Const().TableName.TRANSITION] = transition
@@ -48,7 +49,7 @@ class Parser:
         return transition_dict
 
     @staticmethod
-    def _parse_item():
+    def _parse_item(text: str) -> list:
         pass
 
     @staticmethod
